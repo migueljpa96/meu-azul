@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A Meu Azul, antes e depois.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://migueljpa96.github.io/meu-azul/">
+<meta property="og:title" content="Meu Azul, antes e depois">
+<meta property="og:description" content="Os 8 ecrãs da loja, para arrastar e comparar.">
+<meta property="og:image" content="https://migueljpa96.github.io/meu-azul/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<link rel="icon" href="assets/logo.webp">
+<title>Meu Azul, antes e depois</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wdth,wght@75..100,400..700&display=swap">
+<style>
+/* Layout: one warm-paper page, the same look the shop would have. A one-line title, then every screen of the shop as a device pair you drag from hoje to depois. */
+:root {
+  --paper: #F4F0E9;
+  --paper-rgb: 244 240 233;
+  --paper-2: #EBE5DB;
+  --card: #FBF9F5;
+  --ink: #1D1B18;
+  --ink-rgb: 29 27 24;
+  --muted: #6F695F;
+  --line: #E0D9CD;
+  --azul: #0B6E8C;
+  --white: #FFFFFF;
+  --shade: 70 52 28;
+  --f: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme: light;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+body { background: var(--paper); color: var(--ink); font-family: var(--f); font-size: 17px; line-height: 1.45; -webkit-font-smoothing: antialiased; padding-inline: clamp(16px, 4vw, 48px); }
+img { display: block; }
+.wrap { max-width: 1320px; margin-inline: auto; padding-block: 0 56px; }
+svg.i { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+.logo { mix-blend-mode: multiply; }
+
+/* Sticky screen index */
+.pn { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; isolation: isolate; display: flex; align-items: center; gap: 18px; padding-block: 10px; background: rgb(var(--paper-rgb) / .92); box-shadow: 0 0 0 100vmax rgb(var(--paper-rgb) / .92); clip-path: inset(0 -100vmax); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+.pn .logo { width: 44px; height: 44px; flex: none; }
+.chips { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; min-width: 0; }
+.chips::-webkit-scrollbar { display: none; }
+.chips a { flex: none; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 600; padding: 7px 14px; border-radius: 999px; border: 1px solid var(--line); background: var(--card); }
+.chips a:hover, .chips a:focus-visible { background: var(--ink); border-color: var(--ink); color: var(--paper); outline: none; }
+
+.top { padding-block: clamp(40px, 6vw, 80px) 0; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px 32px; flex-wrap: wrap; }
+.h1 { font-weight: 600; font-stretch: 88%; font-size: clamp(44px, 7.4vw, 104px); line-height: .92; letter-spacing: -.045em; margin: 0; }
+.h1 span { color: var(--muted); }
+
+/* Screens */
+.hint { display: inline-flex; align-items: center; gap: 10px; border: 1px solid var(--line); background: var(--card); font-weight: 600; font-size: 14px; padding: 8px 15px; border-radius: 999px; margin: 0; }
+.scr { padding-top: clamp(56px, 8vw, 104px); scroll-margin-top: 70px; }
+.scr-head { display: flex; align-items: baseline; gap: 10px 20px; flex-wrap: wrap; margin-bottom: clamp(20px, 3vw, 32px); }
+.scr-head .n { font-weight: 600; font-size: clamp(16px, 1.6vw, 20px); color: var(--muted); font-variant-numeric: tabular-nums; }
+.scr-head h3 { font-weight: 600; font-stretch: 90%; font-size: clamp(36px, 5vw, 64px); line-height: .95; letter-spacing: -.035em; margin: 0; }
+.devices { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: clamp(20px, 3vw, 40px); align-items: end; }
+.devices.solo { grid-template-columns: minmax(0, 1fr); }
+
+.browser { margin: 0; border-radius: 12px; background: var(--card); overflow: hidden; border: 1px solid var(--line); box-shadow: 0 40px 70px -40px rgb(var(--shade) / .45); }
+.bar { height: 34px; display: flex; align-items: center; gap: 7px; padding-inline: 14px; border-bottom: 1px solid var(--line); }
+.bar i { width: 10px; height: 10px; border-radius: 50%; background: var(--line); flex: none; }
+.url { margin-inline: auto; font-size: 12px; color: var(--muted); background: var(--paper); padding: 3px clamp(14px, 5vw, 56px); border-radius: 7px; }
+.browser .compare { aspect-ratio: 1440 / 900; }
+.phone { width: 300px; max-width: 100%; padding: 9px; border-radius: 46px; background: var(--ink); box-shadow: 0 40px 70px -36px rgb(var(--shade) / .6); justify-self: center; }
+.phone .compare { aspect-ratio: 390 / 844; border-radius: 37px; }
+
+.compare { position: relative; overflow: hidden; touch-action: pan-y; user-select: none; -webkit-user-select: none; cursor: ew-resize; --pos: 50%; --k: 1; background: var(--paper); }
+.compare .layer { position: absolute; inset: 0; }
+.compare .before { clip-path: inset(0 calc(100% - var(--pos)) 0 0); }
+.compare .before > img { width: 100%; height: 100%; object-fit: cover; }
+.canvas { position: absolute; top: 0; left: 0; transform-origin: 0 0; transform: scale(var(--k)); }
+.handle { position: absolute; top: 0; bottom: 0; left: var(--pos); width: 0; outline: none; z-index: 3; }
+.handle::before { content: ""; position: absolute; top: 0; bottom: 0; left: -1px; width: 2px; background: var(--white); box-shadow: 0 0 0 1px rgb(var(--ink-rgb) / .3); }
+.knob { position: absolute; top: 50%; left: 0; width: 44px; height: 44px; transform: translate(-50%, -50%); border-radius: 50%; background: var(--azul); color: var(--white); display: grid; place-items: center; box-shadow: 0 0 0 3px var(--white), 0 8px 20px rgb(var(--shade) / .35); }
+.handle:focus-visible .knob { box-shadow: 0 0 0 3px var(--white), 0 0 0 6px var(--ink); }
+.tag { position: absolute; top: 15%; padding: 5px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; transition: opacity .2s; pointer-events: none; z-index: 2; }
+.t-before { left: 12px; background: var(--ink); color: var(--white); }
+.t-after { right: 12px; background: var(--white); color: var(--ink); box-shadow: 0 2px 8px rgb(var(--shade) / .2); }
+.compare.lo .t-before, .compare.hi .t-after { opacity: 0; }
+
+.fine { color: var(--muted); font-size: 13px; margin: clamp(56px, 8vw, 96px) 0 0; }
+
+/* ===================== The shop itself (mock-ups, fixed size, always this look) ===================== */
+.s { position: absolute; inset: 0; background: var(--paper); color: var(--ink); font-family: var(--f); font-size: 15px; line-height: 1.3; overflow: hidden; }
+.s h1, .s h2, .s h3, .s p { margin: 0; }
+.s .i { width: 22px; height: 22px; }
+.s-ann { height: 36px; background: var(--ink); color: #EDE7DD; display: flex; align-items: center; justify-content: center; gap: 22px; font-size: 13px; letter-spacing: .02em; }
+.s-ann i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .5; }
+.cp .s-ann { height: 32px; font-size: 12px; }
+.s-hd { height: 84px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 56px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.s-hd nav { display: flex; gap: 32px; font-size: 15px; font-weight: 500; }
+.s-hd .logo { width: 68px; height: 68px; }
+.s-tools { display: flex; justify-content: flex-end; align-items: center; gap: 22px; }
+.s-srch { width: 220px; height: 40px; border-radius: 20px; background: var(--card); border: 1px solid var(--line); display: flex; align-items: center; gap: 10px; padding: 0 14px; color: var(--muted); font-size: 14px; }
+.s-srch .i { width: 18px; height: 18px; color: var(--ink); }
+.s-bag { position: relative; display: block; line-height: 0; }
+.s-bag b { position: absolute; top: -6px; right: -8px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--ink); color: var(--paper); font-size: 11px; font-weight: 600; display: grid; place-items: center; line-height: 1; }
+.s-hp { height: 60px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding: 0 16px; border-bottom: 1px solid var(--line); background: var(--paper); }
+.s-hp .logo { width: 50px; height: 50px; }
+.s-hp .s-tools { gap: 16px; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 52px; padding: 0 28px; border-radius: 999px; background: var(--azul); color: var(--white); font-weight: 600; font-size: 16px; white-space: nowrap; }
+.btn.full { width: 100%; }
+.lnk { font-weight: 600; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; white-space: nowrap; }
+.ey { display: block; font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.crumb { font-size: 13px; color: var(--muted); }
+.big { font-weight: 600; font-stretch: 90%; letter-spacing: -.03em; line-height: 1; }
+.row { display: flex; gap: 24px; align-items: center; }
+.hd2 { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 16px; }
+.hd2 h2 { font-size: 26px; font-weight: 600; font-stretch: 90%; letter-spacing: -.02em; }
+.cp .hd2 h2 { font-size: 20px; }
+.cp .lnk { font-size: 14px; }
+
+.ph { position: relative; aspect-ratio: 1; border-radius: 6px; overflow: hidden; background: var(--paper-2); }
+.ph img { width: 100%; height: 100%; object-fit: cover; }
+.off { position: absolute; top: 10px; left: 10px; background: var(--card); font-size: 12px; font-weight: 600; padding: 4px 8px; border-radius: 999px; }
+.c-n { margin-top: 10px; font-size: 15px; font-weight: 500; }
+.c-p { margin-top: 2px; display: flex; gap: 8px; align-items: baseline; font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.c-p s { color: var(--muted); font-weight: 400; font-size: 14px; }
+.cp .c-n { font-size: 13.5px; margin-top: 8px; }
+.cp .c-p { font-size: 13.5px; }
+.cp .c-p s { font-size: 12.5px; }
+.cp .off { top: 8px; left: 8px; font-size: 11px; padding: 3px 7px; }
+.g4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.g2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+
+/* Início */
+.hi { display: grid; grid-template-columns: 1fr 860px; padding: 24px 56px 0; height: 520px; }
+.hi-copy { align-self: center; padding-right: 40px; }
+.hi-copy h1 { font-size: 72px; margin: 16px 0 18px; }
+.hi-copy p { font-size: 18px; color: var(--muted); margin-bottom: 30px; max-width: 400px; }
+.hi-img { width: 860px; height: 496px; border-radius: 8px; object-fit: cover; object-position: 50% 35%; }
+.nov { padding: 40px 56px 0; }
+.hi-img2 { width: 390px; height: 380px; object-fit: cover; object-position: 28% 40%; }
+.cp .hi-copy { padding: 22px 16px 0; }
+.cp .hi-copy h1 { font-size: 40px; margin: 10px 0 12px; }
+.cp .hi-copy p { font-size: 15px; margin-bottom: 20px; }
+.cp .nov { padding: 32px 16px 0; }
+
+/* Coleção */
+.co-top { padding: 32px 56px 0; }
+.co-top h1 { font-size: 56px; margin-top: 10px; display: flex; align-items: baseline; gap: 16px; }
+.co-top h1 small { font-size: 16px; font-weight: 400; color: var(--muted); letter-spacing: 0; font-stretch: 100%; }
+.co-bar { margin: 24px 56px 0; padding: 14px 0; border-block: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; }
+.chp { height: 36px; padding: 0 16px; border-radius: 18px; border: 1px solid var(--line); background: var(--card); font-weight: 500; font-size: 14px; display: inline-flex; align-items: center; white-space: nowrap; }
+.chp.on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.dd { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 500; }
+.dd .i { width: 16px; height: 16px; }
+.co-grid { padding: 28px 56px 0; row-gap: 32px; }
+.cp .co-top { padding: 18px 16px 0; }
+.cp .co-top h1 { font-size: 36px; margin-top: 6px; gap: 10px; }
+.cp .co-top h1 small { font-size: 14px; }
+.co-chips { display: flex; gap: 8px; padding: 16px 16px 12px; overflow: hidden; }
+.co-tools { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 16px 16px; }
+.co-tools span { height: 40px; border-radius: 20px; border: 1px solid var(--line); background: var(--card); display: flex; align-items: center; justify-content: center; gap: 6px; font-weight: 500; font-size: 14px; }
+.co-tools .i { width: 16px; height: 16px; }
+.cp .co-grid { padding: 0 16px; row-gap: 20px; }
+
+/* Produto */
+.pr { display: grid; grid-template-columns: 88px 660px 1fr; gap: 40px; padding: 28px 56px 0; }
+.thumbs { display: grid; gap: 12px; align-content: start; }
+.thumbs .on { outline: 1.5px solid var(--ink); outline-offset: 3px; }
+.pr-main { width: 660px; border-radius: 8px; }
+.pr-info { padding-top: 8px; }
+.pr-info h1 { font-size: 42px; margin: 10px 0 14px; }
+.price { display: flex; align-items: center; gap: 12px; font-variant-numeric: tabular-nums; }
+.price b { font-size: 24px; font-weight: 600; }
+.price s { font-size: 17px; color: var(--muted); }
+.pill { font-size: 12px; font-weight: 600; padding: 4px 9px; border-radius: 999px; background: var(--paper-2); }
+.desc { font-size: 16px; color: var(--muted); line-height: 1.5; margin: 18px 0 26px !important; max-width: 520px; }
+.size-h { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 10px; }
+.size-h b { font-size: 15px; font-weight: 600; }
+.size-h u { font-size: 14px; color: var(--muted); text-underline-offset: 3px; }
+.sizes { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.sizes span { height: 48px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; font-weight: 500; font-size: 16px; font-variant-numeric: tabular-nums; }
+.sizes .on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+.buy { display: flex; gap: 12px; margin-top: 24px; }
+.buy .btn { flex: 1; height: 56px; font-size: 17px; }
+.sq { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--line); background: var(--card); display: grid; place-items: center; flex: none; }
+.trust { display: grid; gap: 10px; margin-top: 26px; font-size: 14px; color: var(--muted); }
+.trust span { display: flex; align-items: center; gap: 10px; }
+.trust .i { width: 20px; height: 20px; color: var(--ink); }
+.pr-media { position: relative; width: 390px; height: 390px; background: var(--paper-2); }
+.pr-media img { width: 100%; height: 100%; object-fit: cover; }
+.dots { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); display: flex; gap: 6px; }
+.dots i { width: 6px; height: 6px; border-radius: 3px; background: rgb(var(--ink-rgb) / .25); }
+.dots i.on { width: 18px; background: var(--ink); }
+.pr-info.p { padding: 16px 16px 0; }
+.pr-info.p h1 { font-size: 26px; margin: 6px 0 8px; }
+.pr-info.p .price b { font-size: 20px; }
+.pr-info.p .price s { font-size: 15px; }
+.pr-info.p .size-h { margin-top: 18px; }
+.pr-info.p .sizes { gap: 6px; }
+.pr-info.p .sizes span { height: 44px; font-size: 15px; }
+.pr-info.p .trust { margin-top: 16px; font-size: 13px; gap: 8px; }
+.pr-info.p .trust .i { width: 18px; height: 18px; }
+.sticky { position: absolute; left: 0; right: 0; bottom: 0; padding: 12px 16px 24px; background: var(--paper); border-top: 1px solid var(--line); }
+
+/* Carrinho */
+.ca { display: grid; grid-template-columns: 1fr 400px; gap: 56px; padding: 32px 56px 0; }
+.ca-h { display: flex; align-items: baseline; gap: 14px; }
+.ca-h h1 { font-size: 44px; }
+.ca-h span { color: var(--muted); font-size: 16px; }
+.ship { margin-top: 20px; background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; }
+.ship b { font-weight: 600; }
+.track { height: 6px; border-radius: 3px; background: var(--paper-2); margin-top: 12px; overflow: hidden; }
+.track i { display: block; height: 100%; width: 50%; background: var(--ink); border-radius: 3px; }
+.item { display: grid; grid-template-columns: 112px 1fr auto auto; gap: 22px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--line); }
+.item h3 { font-size: 17px; font-weight: 600; }
+.item .meta { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.item .rm { color: var(--muted); font-size: 13px; text-decoration: underline; margin-top: 10px; display: block; }
+.step { height: 40px; border-radius: 20px; border: 1px solid var(--line); background: var(--card); display: flex; align-items: center; gap: 14px; padding: 0 12px; font-weight: 600; font-size: 15px; }
+.step .i { width: 16px; height: 16px; }
+.item .amt { font-size: 17px; font-weight: 600; }
+.up-h { margin: 26px 0 14px; }
+.up-h h3 { font-size: 18px; font-weight: 600; }
+.up-h p { color: var(--muted); font-size: 14px; margin-top: 4px; }
+.ups { display: grid; grid-template-columns: repeat(3, 150px); gap: 18px; }
+.add { margin-top: 6px; display: inline-flex; align-items: center; gap: 4px; font-size: 14px; font-weight: 600; color: var(--azul); }
+.add .i { width: 15px; height: 15px; }
+.sum { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 26px; align-self: start; margin-top: 8px; }
+.sum h3 { font-size: 18px; font-weight: 600; margin-bottom: 12px; }
+.ln { display: flex; justify-content: space-between; align-items: baseline; padding: 8px 0; font-size: 15px; font-variant-numeric: tabular-nums; }
+.ln small { color: var(--muted); font-size: 13px; }
+.ln.tot { border-top: 1px solid var(--line); margin-top: 8px; padding-top: 16px; font-weight: 600; }
+.ln.tot b { font-size: 24px; font-weight: 600; }
+.pay { margin-top: 14px !important; text-align: center; color: var(--muted); font-size: 12px; }
+.ca1 { padding: 18px 16px 0; }
+.cp .ca-h h1 { font-size: 30px; }
+.cp .ca-h span { font-size: 14px; }
+.cp .ship { margin-top: 14px; padding: 14px; font-size: 14px; }
+.cp .item { grid-template-columns: 88px 1fr auto; gap: 14px; padding: 16px 0; }
+.cp .item h3 { font-size: 15px; }
+.cp .item .meta { font-size: 13px; }
+.cp .item .amt { font-size: 15px; }
+.cp .step { height: 34px; margin-top: 10px; display: inline-flex; font-size: 14px; }
+.cp .up-h { margin: 18px 0 12px; }
+.cp .up-h h3 { font-size: 16px; }
+.cp .up-h p { font-size: 13px; }
+.cp .ups { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+
+/* Pesquisa */
+.se-under { position: absolute; top: 120px; left: 0; right: 0; bottom: 0; }
+.se-dim { position: absolute; inset: 120px 0 0 0; background: rgb(var(--ink-rgb) / .38); }
+.se-panel { position: absolute; top: 120px; left: 0; right: 0; background: var(--paper); padding: 32px 56px 40px; box-shadow: 0 30px 60px -20px rgb(var(--shade) / .45); }
+.q { display: flex; align-items: center; gap: 16px; padding-bottom: 16px; border-bottom: 1.5px solid var(--ink); }
+.q .i { width: 28px; height: 28px; }
+.q b { font-size: 40px; font-weight: 500; letter-spacing: -.02em; line-height: 1; }
+.q .caret { width: 2px; height: 40px; background: var(--ink); margin-left: -12px; }
+.q .clr { margin-left: auto; font-size: 14px; color: var(--muted); text-decoration: underline; }
+.se-body { display: grid; grid-template-columns: 240px 1fr; gap: 48px; margin-top: 28px; }
+.lbl { font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px !important; }
+.sugs { display: grid; gap: 12px; font-size: 18px; color: var(--muted); }
+.sugs b { color: var(--ink); font-weight: 600; }
+.se-top { display: flex; align-items: center; gap: 14px; padding: 24px 16px 12px; border-bottom: 1px solid var(--line); }
+.fld { flex: 1; height: 44px; border-radius: 22px; border: 1.5px solid var(--ink); background: var(--card); display: flex; align-items: center; gap: 8px; padding: 0 14px; font-size: 16px; }
+.fld .i { width: 18px; height: 18px; }
+.fld .caret { width: 1.5px; height: 20px; background: var(--ink); margin-left: -6px; }
+.fld .x { margin-left: auto; color: var(--muted); line-height: 0; }
+.se-top > span { font-size: 15px; font-weight: 500; }
+.pop { padding: 16px 16px 4px; }
+.pop .row { gap: 8px; flex-wrap: wrap; }
+.se-res { padding: 18px 16px 0; }
+
+/* Menu */
+.me { position: absolute; inset: 0; background: var(--paper); }
+.me-top { height: 76px; padding: 14px 16px 0; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; border-bottom: 1px solid var(--line); }
+.me-top .i { justify-self: end; }
+.me-top .logo { width: 50px; height: 50px; }
+.me-links { margin: 6px 16px 0; }
+.me-links div { height: 62px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); font-size: 28px; font-weight: 500; letter-spacing: -.02em; }
+.me-links .i { width: 20px; height: 20px; color: var(--muted); }
+.me-links em { font-style: normal; font-size: 13px; font-weight: 600; letter-spacing: 0; padding: 3px 9px; border-radius: 999px; background: var(--paper-2); margin-left: 10px; vertical-align: middle; }
+.me-sub { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 16px 0; }
+.me-tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 22px 16px 0; }
+.me-tiles img { width: 100%; height: 230px; object-fit: cover; border-radius: 8px; }
+.me-tiles span { display: block; margin-top: 8px; font-weight: 600; font-size: 15px; }
+.me-contact { position: absolute; left: 16px; right: 16px; bottom: 30px; display: flex; justify-content: space-between; font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; }
+.me-contact span { display: flex; align-items: center; gap: 8px; }
+.me-contact .i { width: 18px; height: 18px; color: var(--ink); }
+
+/* A loja */
+.lo { position: relative; height: 560px; overflow: hidden; }
+.lo > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 70% 30%; }
+.lo-copy { position: absolute; left: 56px; top: 0; bottom: 0; width: 580px; display: flex; flex-direction: column; justify-content: center; }
+.lo-copy h1 { font-size: 54px; margin: 14px 0 18px; line-height: 1.02; }
+.lo-copy p { font-size: 17px; color: var(--muted); max-width: 460px; line-height: 1.5; }
+.lo-copy .sig { margin-top: 18px; font-weight: 600; color: var(--ink); }
+.vals { display: grid; grid-template-columns: repeat(3, 1fr); gap: 48px; padding: 36px 56px 0; }
+.vals b { font-size: 18px; font-weight: 600; }
+.vals p { color: var(--muted); font-size: 15px; margin-top: 6px !important; }
+.cp .lo { height: 330px; }
+.cp .lo > img { object-position: 84% 30%; }
+.cp .lo-copy { position: static; width: auto; padding: 22px 16px 0; }
+.cp .lo-copy h1 { font-size: 30px; margin: 10px 0 12px; }
+.cp .lo-copy p { font-size: 15px; }
+.cp .vals { grid-template-columns: 1fr; gap: 14px; padding: 26px 16px 0; margin-top: 4px; border-top: 1px solid var(--line); margin-inline: 16px; padding-inline: 0; }
+.cp .vals b { font-size: 15px; }
+.cp .vals p { font-size: 14px; margin-top: 2px !important; }
+
+/* 404 */
+.er { text-align: center; padding: 84px 56px 0; }
+.er h1 { font-size: 64px; margin: 14px 0; }
+.er p { font-size: 18px; color: var(--muted); }
+.er .row { justify-content: center; margin-top: 28px; }
+.er-more { padding: 56px 56px 0; }
+.cp .er { padding: 56px 20px 0; }
+.cp .er h1 { font-size: 36px; margin: 12px 0 10px; }
+.cp .er p { font-size: 15px; }
+.cp .er .row { flex-direction: column; align-items: stretch; gap: 16px; margin-top: 24px; }
+.cp .er-more { padding: 40px 16px 0; }
+
+@media (max-width: 860px) {
+  .devices, .devices.solo { grid-template-columns: minmax(0, 1fr); }
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></symbol>
+  <symbol id="i-bag" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 13H6.2L5 8Z"/><path d="M9 8V6.5a3 3 0 0 1 6 0V8"/></symbol>
+  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 8h16M4 16h16"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20Z"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M3 6.5h11v10H3zM14 10h4l3 3.2v3.3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17.5" cy="17.5" r="1.8"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M4 12a8 8 0 1 0 2.4-5.7M4 4.5V9h4.5"/></symbol>
+  <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10.5h18"/></symbol>
+  <symbol id="i-arrows" viewBox="0 0 24 24"><path d="m9 7-5 5 5 5M15 7l5 5-5 5"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  <symbol id="i-minus" viewBox="0 0 24 24"><path d="M6 12h12"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 6v12M6 12h12"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="6.5" y="2.5" width="11" height="19" rx="2.5"/><path d="M10.5 18h3"/></symbol>
+  <symbol id="i-ig" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.01"/></symbol>
+</svg>
+
+<nav class="pn" aria-label="Ecrãs">
+  <img class="logo" src="assets/logo.webp" alt="Meu Azul">
+  <div class="chips">
+    <a href="#inicio">Início</a><a href="#colecao">Coleção</a><a href="#produto">Produto</a><a href="#carrinho">Carrinho</a><a href="#pesquisa">Pesquisa</a><a href="#menu">Menu</a><a href="#loja">A loja</a><a href="#erro">404</a>
+  </div>
+</nav>
+
+<main class="wrap">
+  <header class="top">
+    <h1 class="h1">Meu Azul,<br><span>antes e depois.</span></h1>
+    <p class="hint"><svg class="i" width="18" height="18"><use href="#i-arrows"/></svg>Arrasta para comparar</p>
+  </header>
+
+  <section class="scr" id="inicio">
+    <div class="scr-head"><span class="n">01</span><h3>Início</h3></div>
+    <div class="devices" data-pair="inicio"></div>
+  </section>
+  <section class="scr" id="colecao">
+    <div class="scr-head"><span class="n">02</span><h3>Coleção</h3></div>
+    <div class="devices" data-pair="colecao"></div>
+  </section>
+  <section class="scr" id="produto">
+    <div class="scr-head"><span class="n">03</span><h3>Produto</h3></div>
+    <div class="devices" data-pair="produto"></div>
+  </section>
+  <section class="scr" id="carrinho">
+    <div class="scr-head"><span class="n">04</span><h3>Carrinho</h3></div>
+    <div class="devices" data-pair="carrinho"></div>
+  </section>
+  <section class="scr" id="pesquisa">
+    <div class="scr-head"><span class="n">05</span><h3>Pesquisa</h3></div>
+    <div class="devices" data-pair="pesquisa"></div>
+  </section>
+  <section class="scr" id="menu">
+    <div class="scr-head"><span class="n">06</span><h3>Menu</h3></div>
+    <div class="devices solo" data-pair="menu"></div>
+  </section>
+  <section class="scr" id="loja">
+    <div class="scr-head"><span class="n">07</span><h3>A loja</h3></div>
+    <div class="devices" data-pair="loja"></div>
+  </section>
+  <section class="scr" id="erro">
+    <div class="scr-head"><span class="n">08</span><h3>Página 404</h3></div>
+    <div class="devices" data-pair="erro"></div>
+  </section>
+
+  <p class="fine">Maquetas feitas com os vossos produtos, preços e fotos.</p>
+</main>
+
+<script>
+(() => {
+  // key: [name, price, price before discount (0 = none)], all from the live shop
+  const P = {
+    c2em1: ['Bota Castanha 2 em 1', 28, 35],
+    camurca: ['Bota Camurça', 25, 30],
+    texcast: ['Bota Texana Castanha', 25, 30],
+    texcinza: ['Bota Texana Cinza', 25, 30],
+    texrosa: ['Bota Texana Rosa Claro', 25, 30],
+    texalta: ['Bota Texana Bege Cano Alto', 20, 25],
+    fivela: ['Bota Castanha', 25, 32.5],
+    pantufa: ['Bota Pantufa', 20, 25],
+    salto: ['Bota Preta de Salto', 25, 30],
+    mazul: ['Mocassim Azul', 15, 0],
+  };
+  const eur = (n) => (Number.isInteger(n) ? n : n.toFixed(2).replace('.', ',')) + ' €';
+  const off = (k) => (P[k][2] ? Math.floor(((P[k][2] - P[k][1]) / P[k][2]) * 100) : 0);
+  const ic = (n) => `<svg class="i"><use href="#i-${n}"/></svg>`;
+  const pic = (f, cls = '', inner = '') => `<div class="ph ${cls}">${inner}<img src="assets/f/${f}.webp" alt="" loading="lazy"></div>`;
+  const card = (k) => `<div>${pic(k, '', off(k) ? `<span class="off">−${off(k)}%</span>` : '')}<div class="c-n">${P[k][0]}</div><div class="c-p">${eur(P[k][1])}${P[k][2] ? `<s>${eur(P[k][2])}</s>` : ''}</div></div>`;
+  const logo = () => `<img class="logo" src="assets/logo.webp" alt="">`;
+  const bag = (n = 0) => `<span class="s-bag">${ic('bag')}${n ? `<b>${n}</b>` : ''}</span>`;
+  const annD = () => `<div class="s-ann"><span>Portes grátis a partir de 50 €</span><i></i><span>30 dias para devolver</span><i></i><span>MB Way, Multibanco e Klarna</span></div>`;
+  const hdD = (n = 0) => `<div class="s-hd"><nav><span>Mulher</span><span>Homem</span><span>Novidades</span><span>Saldos</span></nav>${logo()}<div class="s-tools"><div class="s-srch">${ic('search')}Pesquisar</div>${ic('user')}${bag(n)}</div></div>`;
+  const annP = () => `<div class="s-ann">Portes grátis a partir de 50 €</div>`;
+  const hdP = (n = 0) => `<div class="s-hp">${ic('menu')}${logo()}<div class="s-tools">${ic('search')}${bag(n)}</div></div>`;
+  const sizes = (on) => `<div class="sizes">${[36, 37, 38, 39, 40, 41].map((n) => `<span${n === on ? ' class="on"' : ''}>${n}</span>`).join('')}</div>`;
+  const trust = (all = true) => `<div class="trust"><span>${ic('truck')}Portes grátis a partir de 50 €</span><span>${ic('back')}30 dias para devolver</span>${all ? `<span>${ic('card')}MB Way, Multibanco e Klarna</span>` : ''}</div>`;
+  const heroD = () => `<div class="hi"><div class="hi-copy"><span class="ey">Coleção de outono</span><h1 class="big">O par certo,<br>ao preço certo.</h1><p>Botas, botins e mocassins escolhidos a dedo. Desde 15&nbsp;€.</p><div class="row"><span class="btn">Ver novidades</span><span class="lnk">Ver mulher</span></div></div><img class="hi-img" src="assets/l/hero.webp" alt=""></div>`;
+  const nov = () => `<div class="nov"><div class="hd2"><h2>Novidades</h2><span class="lnk">Ver tudo</span></div><div class="g4">${['c2em1', 'camurca', 'mazul', 'fivela'].map(card).join('')}</div></div>`;
+  const ups = (add) => `<div class="ups">${['salto', 'texcast', 'fivela'].map((k) => `<div>${pic(k)}<div class="c-n">${P[k][0]}</div><div class="c-p">${eur(P[k][1])}</div>${add ? `<span class="add">${ic('plus')}Adicionar</span>` : ''}</div>`).join('')}</div>`;
+  const vals = `<div class="vals"><div><b>Seleção cuidadosa</b><p>Feita com muito carinho e respeito.</p></div><div><b>Qualidade e preço</b><p>Equilíbrio, beleza, conforto e durabilidade.</p></div><div><b>Compra prática</b><p>Com foco na satisfação e confiança de quem compra.</p></div></div>`;
+  const quote = `<span class="ey">Sobre nós</span><h1 class="big">“Sempre fui apaixonada por sapatos.”</h1>`;
+
+  const M = {
+    'inicio-d': () => `${annD()}${hdD()}${heroD()}${nov()}`,
+    'inicio-p': () => `${annP()}${hdP()}<img class="hi-img2" src="assets/l/hero.webp" alt="">
+      <div class="hi-copy"><span class="ey">Coleção de outono</span><h1 class="big">O par certo,<br>ao preço certo.</h1><p>Botas, botins e mocassins escolhidos a dedo. Desde 15&nbsp;€.</p><span class="btn full">Ver novidades</span></div>
+      <div class="nov"><div class="hd2"><h2>Novidades</h2><span class="lnk">Ver tudo</span></div><div class="g2">${['c2em1', 'camurca'].map(card).join('')}</div></div>`,
+
+    'colecao-d': () => `${annD()}${hdD()}
+      <div class="co-top"><div class="crumb">Início / Mulher</div><h1 class="big">Mulher <small>43 artigos</small></h1></div>
+      <div class="co-bar"><div class="row" style="gap:8px"><span class="chp on">Tudo</span><span class="chp">Botas</span><span class="chp">Texanas</span><span class="chp">Mocassins</span><span class="chp">Sabrinas</span><span class="chp">Pantufas</span><span class="chp">Saldos</span></div>
+        <div class="row" style="gap:28px"><span class="dd">${ic('filter')}Filtrar</span><span class="dd">Ordenar: novidades${ic('down')}</span></div></div>
+      <div class="g4 co-grid">${['c2em1', 'camurca', 'texcast', 'fivela', 'pantufa', 'mazul', 'texrosa', 'salto'].map(card).join('')}</div>`,
+    'colecao-p': () => `${annP()}${hdP()}
+      <div class="co-top"><div class="crumb">Início / Mulher</div><h1 class="big">Mulher <small>43 artigos</small></h1></div>
+      <div class="co-chips"><span class="chp on">Tudo</span><span class="chp">Botas</span><span class="chp">Texanas</span><span class="chp">Mocassins</span><span class="chp">Sabrinas</span></div>
+      <div class="co-tools"><span>${ic('filter')}Filtrar</span><span>Ordenar${ic('down')}</span></div>
+      <div class="g2 co-grid">${['c2em1', 'camurca', 'texcast', 'fivela'].map(card).join('')}</div>`,
+
+    'produto-d': () => `${annD()}${hdD()}
+      <div class="pr">
+        <div class="thumbs">${pic('camurca', 'on')}${pic('camurca-b')}</div>
+        ${pic('camurca', 'pr-main')}
+        <div class="pr-info"><div class="crumb">Mulher / Botas</div><h1 class="big">Bota Camurça</h1>
+          <div class="price"><b>25 €</b><s>30 €</s><span class="pill">−16%</span></div>
+          <p class="desc">Camurça sintética de toque macio, num castanho-caramelo que combina com ganga, vestidos ou calções.</p>
+          <div class="size-h"><b>Escolhe o teu número</b><u>Guia de tamanhos</u></div>${sizes(38)}
+          <div class="buy"><span class="btn">Adicionar ao saco</span><span class="sq">${ic('heart')}</span></div>${trust()}
+        </div>
+      </div>`,
+    'produto-p': () => `${annP()}${hdP()}
+      <div class="pr-media"><img src="assets/f/camurca.webp" alt=""><span class="dots"><i class="on"></i><i></i></span></div>
+      <div class="pr-info p"><div class="crumb">Mulher / Botas</div><h1 class="big">Bota Camurça</h1>
+        <div class="price"><b>25 €</b><s>30 €</s><span class="pill">−16%</span></div>
+        <div class="size-h"><b>Escolhe o teu número</b><u>Guia de tamanhos</u></div>${sizes(38)}${trust(false)}
+      </div>
+      <div class="sticky"><span class="btn full">Adicionar ao saco · 25 €</span></div>`,
+
+    'carrinho-d': () => `${annD()}${hdD(1)}
+      <div class="ca"><div>
+          <div class="ca-h"><h1 class="big">O teu saco</h1><span>1 artigo</span></div>
+          <div class="ship"><p>Faltam <b>25 €</b> para portes grátis.</p><div class="track"><i></i></div></div>
+          <div class="item">${pic('camurca')}<div><h3>Bota Camurça</h3><div class="meta">Nº 38</div><span class="rm">Remover</span></div><span class="step">${ic('minus')}1${ic('plus')}</span><span class="amt">25 €</span></div>
+          <div class="up-h"><h3>Fica bem com</h3><p>Com qualquer um destes, os portes ficam grátis.</p></div>${ups(true)}
+        </div>
+        <div class="sum"><h3>Resumo</h3><div class="ln"><span>Subtotal</span><b>25 €</b></div><div class="ln"><span>Portes</span><small>grátis a partir de 50 €</small></div><div class="ln tot"><span>Total</span><b>25 €</b></div><div class="ln"><small>IVA incluído</small></div><span class="btn full" style="margin-top:12px;height:56px">Finalizar compra</span><p class="pay">MB Way · Multibanco · Klarna · Visa · Mastercard</p></div>
+      </div>`,
+    'carrinho-p': () => `${annP()}${hdP(1)}
+      <div class="ca1"><div class="ca-h"><h1 class="big">O teu saco</h1><span>1 artigo</span></div>
+        <div class="ship"><p>Faltam <b>25 €</b> para portes grátis.</p><div class="track"><i></i></div></div>
+        <div class="item">${pic('camurca')}<div><h3>Bota Camurça</h3><div class="meta">Nº 38</div><span class="step">${ic('minus')}1${ic('plus')}</span></div><span class="amt">25 €</span></div>
+        <div class="up-h"><h3>Fica bem com</h3><p>Com qualquer um, os portes ficam grátis.</p></div>${ups(false)}
+      </div>
+      <div class="sticky"><span class="btn full">Finalizar compra · 25 €</span></div>`,
+
+    'pesquisa-d': () => `${annD()}${hdD()}
+      <div class="se-under">${heroD()}${nov()}</div><div class="se-dim"></div>
+      <div class="se-panel">
+        <div class="q">${ic('search')}<b>texana</b><span class="caret"></span><span class="clr">Limpar</span></div>
+        <div class="se-body">
+          <div><p class="lbl">Sugestões</p><div class="sugs"><span><b>texana</b> cano alto</span><span><b>texana</b> castanha</span><span><b>texana</b> bege</span><span><b>texanas</b> em saldo</span></div></div>
+          <div><div class="hd2"><h2 style="font-size:22px">7 texanas</h2><span class="lnk">Ver todas</span></div>
+          <div class="g4">${['texcast', 'texcinza', 'texrosa', 'texalta'].map(card).join('')}</div></div>
+        </div>
+      </div>`,
+    'pesquisa-p': () => `<div class="se-top"><div class="fld">${ic('search')}texana<span class="caret"></span><span class="x">${ic('x')}</span></div><span>Cancelar</span></div>
+      <div class="pop"><p class="lbl">Populares</p><div class="row"><span class="chp">Texanas</span><span class="chp">Mocassins</span><span class="chp">Pantufas</span><span class="chp">Saldos</span></div></div>
+      <div class="se-res"><div class="hd2"><h2>7 texanas</h2><span class="lnk">Ver todas</span></div>
+      <div class="g2">${['texcast', 'texcinza', 'texrosa', 'texalta'].map(card).join('')}</div></div>`,
+
+    'menu-p': () => `<div class="me">
+      <div class="me-top"><span></span>${logo()}${ic('x')}</div>
+      <div class="me-links"><div><span>Mulher</span>${ic('chev')}</div><div><span>Homem</span>${ic('chev')}</div><div><span>Novidades</span>${ic('chev')}</div><div><span>Saldos<em>até −25%</em></span>${ic('chev')}</div></div>
+      <div class="me-sub"><span class="chp">Botas</span><span class="chp">Texanas</span><span class="chp">Mocassins</span><span class="chp">Sabrinas</span><span class="chp">Pantufas</span></div>
+      <div class="me-tiles"><div><img src="assets/l/mulher.webp" alt=""><span>Mulher</span></div><div><img src="assets/l/homem.webp" alt=""><span>Homem</span></div></div>
+      <div class="me-contact"><span>${ic('phone')}915 476 138</span><span>${ic('ig')}@_meu.azul_</span></div></div>`,
+
+    'loja-d': () => `${annD()}${hdD()}
+      <div class="lo"><img src="assets/l/sobre.webp" alt=""><div class="lo-copy">${quote}
+        <p>Não pela funcionalidade, mas pela forma como podem expressar estilo, personalidade e conforto.</p><p class="sig">Beatriz Duarte</p></div></div>
+      ${vals}`,
+    'loja-p': () => `${annP()}${hdP()}
+      <div class="lo"><img src="assets/l/sobre.webp" alt=""></div>
+      <div class="lo-copy">${quote}<p>Não pela funcionalidade, mas pela forma como podem expressar estilo, personalidade e conforto.</p><p class="sig">Beatriz Duarte</p></div>${vals}`,
+
+    'erro-d': () => `${annD()}${hdD()}
+      <div class="er"><span class="ey">Erro 404</span><h1 class="big">Esta página foi dar uma volta.</h1><p>Os sapatos continuam todos cá.</p><div class="row"><span class="btn">Voltar ao início</span><span class="lnk">Ver novidades</span></div></div>
+      <div class="er-more"><div class="hd2"><h2>Talvez gostes</h2></div><div class="g4">${['pantufa', 'mazul', 'texrosa', 'salto'].map(card).join('')}</div></div>`,
+    'erro-p': () => `${annP()}${hdP()}
+      <div class="er"><span class="ey">Erro 404</span><h1 class="big">Esta página foi dar uma volta.</h1><p>Os sapatos continuam todos cá.</p><div class="row"><span class="btn">Voltar ao início</span><span class="lnk" style="text-align:center">Ver novidades</span></div></div>
+      <div class="er-more"><div class="hd2"><h2>Talvez gostes</h2></div><div class="g2">${['pantufa', 'mazul'].map(card).join('')}</div></div>`,
+  };
+
+  const tags = `<span class="tag t-before">Hoje</span><span class="tag t-after">Depois</span>`;
+  const handle = `<div class="handle" role="slider" tabindex="0" aria-label="Comparar hoje e depois" aria-valuemin="0" aria-valuemax="100" aria-valuenow="50"><span class="knob"><svg class="i" width="22" height="22"><use href="#i-arrows"/></svg></span></div>`;
+  const NAMES = { inicio: 'Início', colecao: 'Coleção', produto: 'Produto', carrinho: 'Carrinho', pesquisa: 'Pesquisa', menu: 'Menu', loja: 'A loja', erro: 'Página 404' };
+  const compare = (id, dev) => {
+    const d = dev === 'd';
+    return `<div class="compare" data-compare aria-label="${NAMES[id]} no ${d ? 'computador' : 'telemóvel'}, hoje e depois">
+      <div class="layer after"><div class="canvas ${d ? 'cd' : 'cp'}" style="width:${d ? 1440 : 390}px;height:${d ? 900 : 844}px"><div class="s">${M[`${id}-${dev}`]()}</div></div></div>
+      <div class="layer before"><img src="assets/antes/${id}-${dev}.webp" alt="${NAMES[id]} hoje" loading="lazy"></div>${tags}${handle}</div>`;
+  };
+  document.querySelectorAll('[data-pair]').forEach((el) => {
+    const id = el.dataset.pair;
+    const desk = M[`${id}-d`] ? `<figure class="browser"><div class="bar"><i></i><i></i><i></i><span class="url">meu-azul.com</span></div>${compare(id, 'd')}</figure>` : '';
+    el.innerHTML = `${desk}<div class="phone">${compare(id, 'p')}</div>`;
+  });
+
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-compare]').forEach((el) => {
+    const canvas = el.querySelector('.canvas');
+    const handle = el.querySelector('.handle');
+    let pos = 50, demo = 0, start = null, dragging = false;
+    const set = (v) => {
+      pos = Math.max(0, Math.min(100, v));
+      el.style.setProperty('--pos', pos + '%');
+      handle.setAttribute('aria-valuenow', Math.round(pos));
+      el.classList.toggle('lo', pos < 16);
+      el.classList.toggle('hi', pos > 84);
+    };
+    const fromX = (x) => { const r = el.getBoundingClientRect(); set(((x - r.left) / r.width) * 100); };
+    const stopDemo = () => { cancelAnimationFrame(demo); demo = -1; };
+    if (canvas) new ResizeObserver(() => el.style.setProperty('--k', el.clientWidth / canvas.offsetWidth)).observe(el);
+    el.addEventListener('pointerdown', (e) => { start = { x: e.clientX, y: e.clientY, id: e.pointerId }; stopDemo(); });
+    el.addEventListener('pointermove', (e) => {
+      if (!start) return;
+      if (!dragging) {
+        const dx = Math.abs(e.clientX - start.x), dy = Math.abs(e.clientY - start.y);
+        if (dx < 6 || dx < dy) return;
+        dragging = true;
+        try { el.setPointerCapture(start.id); } catch (_) {}
+      }
+      fromX(e.clientX);
+    });
+    const end = (e) => { if (start && !dragging && e.type === 'pointerup') fromX(e.clientX); start = null; dragging = false; };
+    el.addEventListener('pointerup', end);
+    el.addEventListener('pointercancel', end);
+    handle.addEventListener('keydown', (e) => {
+      const step = { ArrowLeft: -5, ArrowRight: 5, Home: -100, End: 100 }[e.key];
+      if (step === undefined) return;
+      e.preventDefault(); stopDemo(); set(pos + step);
+    });
+    if (still) return;
+    // One back-and-forth the first time it scrolls into view, so people see it moves.
+    const keys = [50, 26, 74, 50], seg = 520;
+    const ease = (t) => (t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting || demo !== 0) return;
+      io.disconnect();
+      const t0 = performance.now() + 200;
+      const run = (now) => {
+        if (demo === -1) return;
+        const t = Math.max(0, now - t0), i = Math.min(keys.length - 2, Math.floor(t / seg));
+        set(keys[i] + (keys[i + 1] - keys[i]) * ease(Math.min(1, (t - i * seg) / seg)));
+        if (t < seg * (keys.length - 1)) demo = requestAnimationFrame(run);
+      };
+      demo = requestAnimationFrame(run);
+    }, { threshold: 0.6 });
+    io.observe(el);
+  });
+})();
+</script>
+</body>
+</html>
