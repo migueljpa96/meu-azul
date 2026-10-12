@@ -548,6 +548,8 @@ svg.i { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: rou
     const stopDemo = () => { cancelAnimationFrame(demo); demo = -1; };
     if (canvas) new ResizeObserver(() => el.style.setProperty('--k', el.clientWidth / canvas.offsetWidth)).observe(el);
     el.addEventListener('pointerdown', (e) => { start = { x: e.clientX, y: e.clientY, id: e.pointerId }; stopDemo(); });
+    // Without this, a mouse drag that starts on a screenshot drags the image itself and cancels the slider.
+    el.addEventListener('dragstart', (e) => e.preventDefault());
     el.addEventListener('pointermove', (e) => {
       if (!start) return;
       if (!dragging) {
